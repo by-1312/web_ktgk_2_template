@@ -10,7 +10,8 @@
     <div class="list-cay-canh">
         @foreach($sanPhams as $sp)
             <div class="cay-canh">
-                <a href="{{ url('caycanh/chitiet/'.$sp->id) }}">
+                    <a href="{{ route('product.detail', $sp->id) }}">
+                        </a>
                     <img src="{{ asset('storage/image/'.$sp->hinh_anh) }}" width="100%" height="180px" style="object-fit: cover;">
                     <div class="p-2">
                         <p style="font-weight:bold; height: 40px; overflow: hidden; margin-bottom: 5px;">

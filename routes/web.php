@@ -11,6 +11,7 @@ Route::get('caycanh/theloai/{category_id}', [HomeController::class, 'index']);
 
 // Tìm kiếm (Layout của bạn dùng method post cho form tìm kiếm)
 Route::post('/timkiem', [HomeController::class, 'index']);
+Route::get('caycanh/chi_tiet/{id}', [HomeController::class, 'chiTiet'])->name('product.detail');
 // 4. Dashboard mặc định
 Route::get('/dashboard', function () {
     return view('dashboard');
