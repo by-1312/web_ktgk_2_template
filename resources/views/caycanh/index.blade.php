@@ -5,13 +5,13 @@
         <a href="{{ request()->fullUrlWithQuery(['sort' => 'desc']) }}" class="btn btn-sm btn-outline-secondary">Giá giảm dần</a>
         <a href="{{ request()->fullUrlWithQuery(['filter' => 'de-cham-soc']) }}" class="btn btn-sm btn-outline-secondary">Dễ chăm sóc</a>
         <a href="{{ request()->fullUrlWithQuery(['filter' => 'bong-ram']) }}" class="btn btn-sm btn-outline-secondary">Chịu được bóng râm</a>
+        <a href="{{ route('home') }}" class="btn btn-sm btn-warning">Xoá bộ lọc</a>
     </div>
 
     <div class="list-cay-canh">
         @foreach($sanPhams as $sp)
             <div class="cay-canh">
-                    <a href="{{ route('product.detail', $sp->id) }}">
-                        </a>
+                    <a href="{{ url('caycanh/chitiet/'.$sp->id) }}">
                     <img src="{{ asset('storage/image/'.$sp->hinh_anh) }}" width="100%" height="180px" style="object-fit: cover;">
                     <div class="p-2">
                         <p style="font-weight:bold; height: 40px; overflow: hidden; margin-bottom: 5px;">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -11,8 +12,11 @@ Route::get('caycanh/theloai/{category_id}', [HomeController::class, 'index']);
 
 // Tìm kiếm (Layout của bạn dùng method post cho form tìm kiếm)
 Route::post('/timkiem', [HomeController::class, 'index']);
-Route::get('caycanh/chi_tiet/{id}', [HomeController::class, 'chiTiet'])->name('product.detail');
-// 4. Dashboard mặc định
+Route::get('caycanh/chitiet/{id}', [HomeController::class, 'chiTiet'])->name('product.detail');
+Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+Route::post('/add-to-cart/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::get('/remove-from-cart/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

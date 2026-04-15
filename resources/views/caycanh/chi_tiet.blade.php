@@ -18,19 +18,50 @@
                 <p><strong>Độ khó:</strong> {{ $sanPham->do_kho }}</p>
                 <p><strong>Yêu cầu ánh sáng:</strong> {{ $sanPham->yeu_cau_anh_sang }}</p>
                 <p><strong>Nhu cầu nước:</strong> {{ $sanPham->nhu_cau_nuoc }}</p>
-                <p><strong>Giá:</strong> <span class="text-danger fw-bold fs-5 italic">{{ number_format($sanPham->gia_ban, 0, ',', '.') }} VNĐ</span></p>
+                <p><strong>Giá:</strong> <span class="text-danger fw-bold fs-5 italic"><i>{{ number_format($sanPham->gia_ban, 0, ',', '.') }} VNĐ</i></span></p>
             </div>
 
-            <form action="#" method="POST" class="mt-4">
+            <form id="add-to-cart-form" class="mt-4">
                 @csrf
+                <input type="hidden" id="product-id" value="{{ $sanPham->id }}">
                 <div class="d-flex align-items-center gap-3">
                     <div class="d-flex align-items-center">
                         <span class="me-2">Số lượng mua:</span>
-                        <input type="number" name="so_luong" value="1" min="1" class="form-control" style="width: 80px;">
+                        <input type="number" id="so-luong" name="so_luong" value="1" min="1" class="form-control" style="width: 80px;">
                     </div>
-                    <button type="submit" class="btn btn-primary px-4">Thêm vào giỏ hàng</button>
+                    <button type="button" id="btn-add-cart" class="btn btn-primary px-4">Thêm vào giỏ hàng</button>
                 </div>
             </form>
+
+            <script>
+            $(document).ready(function() {
+                $('#btn-add-cart').click(function() {
+                    let id = $('#product-id').val();
+                    let so_luong = $('#so-luong').val();
+                    let _token = $('input[name="_token"]').val();
+
+                    $.ajax({
+                        url: "{{ url('/add-to-cart') }}/" + id, // Đường dẫn tới route xử lý
+                        method: "POST",
+                        data: {
+                            id: id,
+                            so_luong: so_luong,
+                            _token: _token
+                        },
+                        success: function(response) {
+                            // 1. Cập nhật con số trên icon giỏ hàng (ID này nằm ở Layout)
+                            $('#cart-number-product').text(response.cart_count);
+
+                            // 2. Thông báo cho người dùng
+                            alert("Đã thêm sản phẩm vào giỏ hàng thành công!");
+                        },
+                        error: function() {
+                            alert("Có lỗi xảy ra, vui lòng thử lại!");
+                        }
+                    });
+                });
+            });
+            </script>
         </div>
     </div>
 </x-cay-canh-layout>

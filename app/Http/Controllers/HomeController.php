@@ -9,14 +9,13 @@ class HomeController extends Controller {
     public function index(Request $request, $category_id = null) {
         $query = SanPham::query();
 
-        // 1. Lọc theo danh mục (Menu)
+
         if ($category_id) {
             $query->whereHas('danhmucs', function($q) use ($category_id) {
                 $q->where('id', $category_id);
             });
         }
-
-        // 2. Tìm kiếm (Keyword)
+    
         if ($request->filled('keyword')) {
             $query->where('ten_san_pham', 'like', '%' . $request->keyword . '%');
         }
@@ -29,6 +28,9 @@ class HomeController extends Controller {
         if ($request->sort == 'asc') $query->orderBy('gia_ban', 'asc');
         if ($request->sort == 'desc') $query->orderBy('gia_ban', 'desc');
 
+        if ($request->filter == 'het-hang') {
+                $query->where('so_luong', '<=', 0);
+            }
         // Hiển thị mặc định 20 sản phẩm
         $sanPhams = $query->take(20)->get();
         $categories = DanhMuc::all();
@@ -39,15 +41,12 @@ class HomeController extends Controller {
             'title' => 'Trang chủ Cây Cảnh' // Truyền biến title để layout không bị lỗi
         ]);
     }
-        public function chiTiet($id)
+    public function chiTiet($id)
     {
-        // Tìm sản phẩm theo ID, nếu không thấy sẽ báo lỗi 404
+        // Tìm sản phẩm hoặc báo lỗi 404 nếu không thấy
         $sanPham = SanPham::findOrFail($id);
-        
-        // Lấy danh sách danh mục để hiển thị trên menu của layout
         $categories = DanhMuc::all();
-
-        return view('caycanh.chi-tiet', [
+        return view('caycanh.chi_tiet', [
             'sanPham' => $sanPham,
             'categories' => $categories,
             'title' => 'Chi tiết: ' . $sanPham->ten_san_pham
