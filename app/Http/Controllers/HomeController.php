@@ -38,7 +38,7 @@ class HomeController extends Controller {
         return view('caycanh.index', [
             'sanPhams' => $sanPhams,
             'categories' => $categories,
-            'title' => 'Trang chủ Cây Cảnh' // Truyền biến title để layout không bị lỗi
+            'title' => 'Trang chủ Cây Cảnh' 
         ]);
     }
     public function chiTiet($id)
