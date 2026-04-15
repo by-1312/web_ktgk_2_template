@@ -9,7 +9,6 @@ use App\Http\Controllers\CartController;
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-use App\Http\Controllers\ProductManagerController;
 // Trang chủ
 
 
@@ -33,4 +32,4 @@ Route::prefix('admin/products')->group(function () {
     Route::get('/{id}', [ProductManagerController::class, 'show'])->name('product.show');
     Route::delete('/{id}', [ProductManagerController::class, 'destroy'])->name('product.destroy');
 });
-});
+
