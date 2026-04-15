@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductManagerController;
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -18,3 +18,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+Route::prefix('admin/products')->group(function () {
+    Route::get('/', [ProductManagerController::class, 'index'])->name('product.index');
+    Route::get('/create', [ProductManagerController::class, 'create'])->name('product.create');
+    Route::post('/store', [ProductManagerController::class, 'store'])->name('product.store');
+    Route::get('/{id}', [ProductManagerController::class, 'show'])->name('product.show');
+    Route::delete('/{id}', [ProductManagerController::class, 'destroy'])->name('product.destroy');
+});
