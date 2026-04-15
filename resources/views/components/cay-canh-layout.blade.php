@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{$title}}</title>
+    <title>{{$title?? 'Quản lý sản phẩm'}}</title>
     <link rel="stylesheet" href="{{asset('library/bootstrap.min.css')}}">
 
     <script src="{{asset('library/jquery.slim.min.js')}}"></script>
@@ -134,15 +134,18 @@
                         </form>
                     </div>
                     <div style='color:white;position:relative' class='mr-2'>
-                        <div style='width:20px; height:20px;background-color:#23b85c; font-size:12px; border:none;
-                             border-radius:50%; position:absolute;right:2px;top:-2px' id='cart-number-product'>
-                                @if (session('cart'))
-                                     {{ count(session('cart')) }}
-                                @else
-                                    0
-                                @endif
+                        <div style='width:20px; height:20px; background-color:#23b85c; font-size:12px; border:none; 
+                                    border-radius:50%; position:absolute; right:2px; top:-2px' id='cart-number-product'>
+                            
+                            {{-- Kiểm tra nếu có session 'cart' thì đếm số lượng phần tử, ngược lại hiển thị 0 --}}
+                            @if (session('cart'))
+                                {{ count(session('cart')) }}
+                            @else
+                                0
+                            @endif
+
                         </div>
-                        <a href="{{url('/gio-hang')}}" style='cursor:pointer;color: #2f5d3a;;'>
+                        <a href="{{ url('/gio-hang') }}" style='cursor:pointer; color: #2f5d3a;'>
                             <i class="fa fa-cart-arrow-down fa-2x mr-2 mt-1" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -175,6 +178,14 @@
         </div>
     </header>
     <main class='container'>
+    @if(session('success'))
+        <div class="container mt-3">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Thành công!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
         {{$slot}}
     </main>
 
