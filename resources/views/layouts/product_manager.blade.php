@@ -106,7 +106,7 @@
                             </td>
                             <td>
                                 <div class="btn-group-custom">
-                                    <a href="{{ url('/admin/products/'.$item->id) }}" class="btn-view">Xem</a>
+                                    <a href="{{ route('product.show', $item->id) }}" class="btn-view">Xem</a>
                                     <form action="{{ url('/admin/products/'.$item->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')">
     @csrf 
     @method('DELETE') <button type="submit" class="btn-delete">Xóa</button>

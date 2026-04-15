@@ -19,13 +19,25 @@ class ProductManagerController extends Controller
     }
 
     // Xem chi tiết sản phẩm
-    public function show($id)
-    {
-        $product = DB::table('san_pham')->where('id', $id)->first();
-        if (!$product) abort(404);
+    // Xem chi tiết sản phẩm
+// app\Http\Controllers\ProductManagerController.php
 
-        return view('caycanh.chitiet', compact('product'));
-    }
+public function show($id)
+{
+    // 1. Lấy dữ liệu và đặt tên biến là $sanPham cho khớp với View
+    $sanPham = DB::table('san_pham')->where('id', $id)->first();
+    
+    if (!$sanPham) abort(404);
+
+    $categories = DB::table('danh_muc')->get(); 
+
+    // 2. Truyền biến $sanPham sang View
+    return view('caycanh.chi_tiet', [
+        'sanPham'    => $sanPham, // Đổi tên ở đây
+        'categories' => $categories,
+        'title'      => 'Chi tiết cây ' . $sanPham->ten_san_pham
+    ]);
+}
 
     // Xóa mềm: Cập nhật status về 0
     public function destroy($id)
