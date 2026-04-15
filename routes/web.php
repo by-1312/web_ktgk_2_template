@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductManagerController;
 
 use App\Http\Controllers\CartController;
 
@@ -33,4 +34,5 @@ Route::prefix('admin/products')->group(function () {
     Route::post('/store', [ProductManagerController::class, 'store'])->name('product.store');
     Route::get('/{id}', [ProductManagerController::class, 'show'])->name('product.show');
     Route::delete('/{id}', [ProductManagerController::class, 'destroy'])->name('product.destroy');
+});
 });
